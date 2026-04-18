@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ar">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Majd Portfolio</title>
+	</head>
+	<body>
+		<div id="app">جارٍ تحميل المحتوى…</div>
+
+		<script>
+			async function loadFragment(path){
+				try{
+					const res = await fetch(path);
+					if(!res.ok) throw new Error('Fetch failed');
+					const html = await res.text();
+					const container = document.getElementById('app');
+					container.innerHTML = html;
+
+					// Execute scripts found in the loaded HTML
+					const scripts = Array.from(container.querySelectorAll('script'));
+					scripts.forEach(s => {
+						const newS = document.createElement('script');
+						if(s.src){
+							newS.src = s.src;
+							newS.async = false;
+						} else {
+							newS.textContent = s.textContent;
+						}
+						document.body.appendChild(newS);
+					});
+				}catch(e){
+					document.getElementById('app').textContent = 'فشل في تحميل المحتوى. تأكد من تشغيل الخادم المحلي (HTTP).';
+					console.error(e);
+				}
+			}
+
+			// Load the portfolio fragment on page load
+			loadFragment('majd_portfolio.html');
+		</script>
+	</body>
+</html>
