@@ -1,0 +1,175 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ADDITIONS — أضف هاد الكود في نهاية style.css
+   • Projects: horizontal scroll — يعرض 3 كروت بنفس الحجم
+   • Contact section
+   • RTL tweaks
+   • Responsive
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Projects: Horizontal Scroll ─────────────────────────────────── */
+.projects-scroll-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 2rem 0 3rem;
+  overflow: hidden;
+}
+
+/* The scrollable track */
+.projects-track {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  /* padding يخلي الكرت الأول والأخير ما ينخبّوا تحت السهم */
+  padding: 1rem 3.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  width: 100%;
+  /* snap للكروت */
+  scroll-snap-type: x mandatory;
+}
+.projects-track:active { cursor: grabbing; }
+.projects-track::-webkit-scrollbar { display: none; }
+
+/*
+  كل كارد يأخذ تقريباً ثلث العرض المتاح
+  calc(33.333% - 1.4rem) يعني 3 بالوجه مع الـ gap
+*/
+.projects-track .project-card {
+  flex: 0 0 calc(33.333% - 1.4rem);
+  min-width: 260px;
+  scroll-snap-align: start;
+}
+
+/* صورة الكارد = اللوجو الافتراضي */
+.projects-track .project-card .project-img,
+.projects-track .project-card .project-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+/* Arrow buttons */
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  color: #C9A84C;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s, transform 0.25s;
+  backdrop-filter: blur(6px);
+  flex-shrink: 0;
+}
+.scroll-arrow:hover {
+  background: rgba(201, 168, 76, 0.32);
+  transform: translateY(-50%) scale(1.1);
+}
+.scroll-arrow-left  { left:  0.25rem; }
+.scroll-arrow-right { right: 0.25rem; }
+
+/* ── Contact Section ─────────────────────────────────────────────── */
+.contact-section {
+  padding: 7rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-container {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.contact-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2.5rem 3rem;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+  min-width: 220px;
+  text-align: center;
+}
+.contact-item:hover {
+  border-color: #C9A84C;
+  background: rgba(201, 168, 76, 0.06);
+  transform: translateY(-4px);
+}
+
+.contact-icon {
+  width: 52px;
+  height: 52px;
+  color: #C9A84C;
+}
+.contact-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-item h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #C9A84C;
+  margin: 0;
+}
+
+.contact-item p {
+  font-size: 0.9rem;
+  opacity: 0.72;
+  margin: 0;
+  word-break: break-all;
+}
+
+/* ── RTL overrides ───────────────────────────────────────────────── */
+html[dir="rtl"] .nav-links        { direction: rtl; }
+html[dir="rtl"] .hero-content     { text-align: center; }
+html[dir="rtl"] .about-text p     { text-align: right; }
+html[dir="rtl"] .contact-item     { direction: rtl; }
+/* يعكس اتجاه الأسهم في RTL */
+html[dir="rtl"] .scroll-arrow-left  { left: auto;  right: 0.25rem; }
+html[dir="rtl"] .scroll-arrow-right { right: auto; left:  0.25rem; }
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  /* يعرض 2 بالوجه على التابلت */
+  .projects-track .project-card {
+    flex: 0 0 calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 600px) {
+  /* يعرض 1 بالوجه على الموبايل */
+  .projects-track .project-card {
+    flex: 0 0 82vw;
+    min-width: 82vw;
+  }
+  .contact-container  { flex-direction: column; align-items: center; }
+  .contact-item       { width: 100%; max-width: 360px; }
+}

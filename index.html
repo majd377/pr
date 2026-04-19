@@ -32,8 +32,8 @@
   </div>
   <ul class="nav-links">
     <li><a href="#projects" data-en="Projects" data-ar="أعمالي">Projects</a></li>
-    <li><a href="#about" data-en="About" data-ar="عني">About</a></li>
-    <li><a href="#contact" data-en="Contact" data-ar="تواصل">Contact</a></li>
+    <li><a href="#about"    data-en="About"    data-ar="عني">About</a></li>
+    <li><a href="#contact"  data-en="Contact"  data-ar="تواصل">Contact</a></li>
   </ul>
   <div class="nav-right">
     <button class="lang-toggle" id="langToggleBtn">عربي</button>
@@ -79,19 +79,18 @@
     <h2 class="section-title" data-en="Projects" data-ar="المشاريع">Projects</h2>
     <div class="section-line"></div>
   </div>
-  <!-- Horizontal scroll track -->
   <div class="projects-scroll-wrapper">
-    <button class="scroll-arrow scroll-arrow-left" id="scrollLeft">&#8592;</button>
+    <button class="scroll-arrow scroll-arrow-left"  id="scrollLeft"  aria-label="Scroll left">&#8592;</button>
     <div class="projects-track" id="projectsGrid"></div>
-    <button class="scroll-arrow scroll-arrow-right" id="scrollRight">&#8594;</button>
+    <button class="scroll-arrow scroll-arrow-right" id="scrollRight" aria-label="Scroll right">&#8594;</button>
   </div>
 </section>
 
 <!-- ── ABOUT ──────────────────────────────────────────────────────────────── -->
 <section class="about-section" id="about">
   <div class="section-header">
-    <div class="section-label" data-en="About Me" data-ar="نبذة عني">About Me</div>
-    <h2 class="section-title" data-en="The Story" data-ar="القصة">The Story</h2>
+    <div class="section-label" data-en="About Me"  data-ar="نبذة عني">About Me</div>
+    <h2 class="section-title"  data-en="The Story" data-ar="القصة">The Story</h2>
     <div class="section-line"></div>
   </div>
   <div class="about-inner">
@@ -100,9 +99,18 @@
       <p>With an eye for aesthetics and a commitment to quality, each piece in this portfolio represents not just a finished product — but a journey of ideas and craftsmanship.</p>
     </div>
     <div class="about-stats">
-      <div class="stat-item"><div class="stat-number" id="statProjects">0</div><div class="stat-label" data-en="Projects Completed" data-ar="مشروع منجز">Projects Completed</div></div>
-      <div class="stat-item"><div class="stat-number" id="statYears">—</div><div class="stat-label" data-en="Years of Experience" data-ar="سنوات خبرة">Years of Experience</div></div>
-      <div class="stat-item"><div class="stat-number" id="statClients">—</div><div class="stat-label" data-en="Happy Clients" data-ar="عميل سعيد">Happy Clients</div></div>
+      <div class="stat-item">
+        <div class="stat-number" id="statProjects">0</div>
+        <div class="stat-label" data-en="Projects Completed" data-ar="مشروع منجز">Projects Completed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="statYears">—</div>
+        <div class="stat-label" data-en="Years of Experience" data-ar="سنوات خبرة">Years of Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="statClients">—</div>
+        <div class="stat-label" data-en="Happy Clients" data-ar="عميل سعيد">Happy Clients</div>
+      </div>
     </div>
   </div>
 </section>
@@ -111,13 +119,15 @@
 <section class="contact-section" id="contact">
   <div class="section-header">
     <div class="section-label" data-en="Get In Touch" data-ar="دعنا نتواصل">Get In Touch</div>
-    <h2 class="section-title" data-en="Contact Me" data-ar="تواصل معي">Contact Me</h2>
+    <h2 class="section-title"  data-en="Contact Me"   data-ar="تواصل معي">Contact Me</h2>
     <div class="section-line"></div>
   </div>
   <div class="contact-container">
+
     <a href="mailto:mjdshbyr449@gmail.com" class="contact-item">
       <div class="contact-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="4" width="20" height="16" rx="2"/>
           <path d="M2 7l10 7 10-7"/>
         </svg>
@@ -125,6 +135,7 @@
       <h3 data-en="Email" data-ar="البريد الإلكتروني">Email</h3>
       <p>mjdshbyr449@gmail.com</p>
     </a>
+
     <a href="https://wa.me/972567059705" class="contact-item" target="_blank" rel="noopener">
       <div class="contact-icon">
         <svg viewBox="0 0 24 24" fill="currentColor">
@@ -134,6 +145,7 @@
       <h3 data-en="WhatsApp" data-ar="واتساب">WhatsApp</h3>
       <p>+972 56 705-9705</p>
     </a>
+
   </div>
 </section>
 
@@ -167,10 +179,10 @@
     <button class="project-modal-close" id="projectModalCloseBtn">×</button>
     <div id="projectModalImg"></div>
     <div class="project-modal-body">
-      <div class="project-modal-tag"   id="pmTag"></div>
-      <h3 class="project-modal-title"  id="pmTitle"></h3>
-      <p  class="project-modal-desc"   id="pmDesc"></p>
-      <a  class="project-modal-link"   id="pmLink" href="#" target="_blank" rel="noopener" style="display:none">Visit Project →</a>
+      <div class="project-modal-tag"  id="pmTag"></div>
+      <h3 class="project-modal-title" id="pmTitle"></h3>
+      <p  class="project-modal-desc"  id="pmDesc"></p>
+      <a  class="project-modal-link"  id="pmLink" href="#" target="_blank" rel="noopener" style="display:none">Visit Project →</a>
     </div>
   </div>
 </div>
@@ -187,16 +199,20 @@
     <button class="admin-tab"        data-tab="about">About</button>
   </div>
 
-  <!-- Projects tab -->
+  <!-- Projects tab — no image upload, default logo is used -->
   <div class="admin-content active" id="tab-projects">
     <div class="admin-section-title">Add New Project</div>
-    <div class="admin-field"><label>Project Title</label><input type="text" id="newTitle" placeholder="e.g. Brand Identity 2024"></div>
-    <div class="admin-field"><label>Description (optional)</label><textarea id="newDesc" placeholder="Describe the project..."></textarea></div>
-    <div class="admin-field"><label>Project Link (optional)</label><input type="url" id="newLink" placeholder="https://..."></div>
     <div class="admin-field">
-      <label>Image URL</label>
-      <input type="url" id="newImageUrl" placeholder="https://example.com/image.jpg">
-      <div class="img-url-preview" id="imgUrlPreview"></div>
+      <label>Project Title</label>
+      <input type="text" id="newTitle" placeholder="e.g. Brand Identity 2024">
+    </div>
+    <div class="admin-field">
+      <label>Description (optional)</label>
+      <textarea id="newDesc" placeholder="Describe the project..."></textarea>
+    </div>
+    <div class="admin-field">
+      <label>Project Link (optional)</label>
+      <input type="url" id="newLink" placeholder="https://...">
     </div>
     <div style="display:flex;gap:1rem;align-items:center;margin-top:.5rem;">
       <button class="admin-btn-primary" id="addProjectBtn">Add Project</button>
@@ -207,16 +223,13 @@
     <div class="admin-projects-list" id="adminProjectsList"></div>
   </div>
 
-  <!-- Identity tab -->
-  <div class="admin-content" id="tab-identity">
-    <!-- kept as-is from original, app.js handles this -->
-  </div>
+  <!-- Identity tab (kept for app.js) -->
+  <div class="admin-content" id="tab-identity"></div>
 
   <!-- About tab -->
   <div class="admin-content" id="tab-about">
     <div class="admin-section-title">About Section</div>
     <p style="font-size:12px;color:#555;margin-bottom:1.5rem;line-height:1.7;">اكتب كل فقرة بالإنجليزي والعربي.</p>
-
     <div class="admin-field">
       <label>Paragraph 1</label>
       <div class="admin-bilingual">
@@ -226,11 +239,11 @@
         </div>
         <div>
           <span class="admin-bilingual-label">العربية <em>AR</em></span>
-          <textarea id="aboutP1Ar" placeholder="الفقرة الأولى بالعربي..." style="font-family:'Lemonada',sans-serif;direction:rtl;text-align:right;"></textarea>
+          <textarea id="aboutP1Ar" placeholder="الفقرة الأولى بالعربي..."
+                    style="font-family:'Lemonada',sans-serif;direction:rtl;text-align:right;"></textarea>
         </div>
       </div>
     </div>
-
     <div class="admin-field">
       <label>Paragraph 2</label>
       <div class="admin-bilingual">
@@ -240,14 +253,20 @@
         </div>
         <div>
           <span class="admin-bilingual-label">العربية <em>AR</em></span>
-          <textarea id="aboutP2Ar" placeholder="الفقرة الثانية بالعربي..." style="font-family:'Lemonada',sans-serif;direction:rtl;text-align:right;"></textarea>
+          <textarea id="aboutP2Ar" placeholder="الفقرة الثانية بالعربي..."
+                    style="font-family:'Lemonada',sans-serif;direction:rtl;text-align:right;"></textarea>
         </div>
       </div>
     </div>
-
     <div class="admin-grid-2">
-      <div class="admin-field"><label>Years of Experience / سنوات الخبرة</label><input type="text" id="statYearsInput" placeholder="e.g. 5+"></div>
-      <div class="admin-field"><label>Happy Clients / عملاء سعداء</label><input type="text" id="statClientsInput" placeholder="e.g. 30+"></div>
+      <div class="admin-field">
+        <label>Years of Experience / سنوات الخبرة</label>
+        <input type="text" id="statYearsInput" placeholder="e.g. 5+">
+      </div>
+      <div class="admin-field">
+        <label>Happy Clients / عملاء سعداء</label>
+        <input type="text" id="statClientsInput" placeholder="e.g. 30+">
+      </div>
     </div>
     <button class="admin-btn-primary" id="saveAboutBtn">Save Changes / حفظ</button>
     <div class="admin-success" id="aboutSuccess">✓ Saved!</div>
