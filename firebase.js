@@ -1,14 +1,20 @@
 // ─── Firebase Config & Init ───────────────────────────────────────────────────
-import { initializeApp }           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAnalytics }            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
-import { getDatabase, ref, get,
-         set, push, remove,
-         onValue }                 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import { getStorage, ref as sRef,
-         uploadString,
-         getDownloadURL,
-         deleteObject }            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+const V = "11.1.0";
+const BASE = `https://www.gstatic.com/firebasejs/${V}`;
 
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { getAnalytics }
+  from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+import {
+  getDatabase, ref, get, set, push, remove, onValue, update
+} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
+import {
+  getStorage, ref as sRef,
+  uploadString, getDownloadURL, deleteObject
+} from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+
+// ── Config ────────────────────────────────────────────────────────────────────
 const firebaseConfig = {
   apiKey:            "AIzaSyBfBVw32bCQnIE_xLgZgsjUwhkBnLPHvOI",
   authDomain:        "box0-238b3.firebaseapp.com",
@@ -20,51 +26,64 @@ const firebaseConfig = {
   measurementId:     "G-6962LDZ4KN"
 };
 
-const app      = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db       = getDatabase(app);
-const storage  = getStorage(app);
+// ── Init ──────────────────────────────────────────────────────────────────────
+const app     = initializeApp(firebaseConfig);
+const db      = getDatabase(app);
+const storage = getStorage(app);
 
-// ─── Realtime DB helpers ──────────────────────────────────────────────────────
+// Init analytics safely (may fail in some environments)
+try { getAnalytics(app); } catch (_) {}
 
-/** Read once */
+// ── Realtime Database helpers ─────────────────────────────────────────────────
+
+/** Read once → returns value or null */
 export async function dbGet(path) {
   const snap = await get(ref(db, path));
   return snap.exists() ? snap.val() : null;
 }
 
-/** Overwrite value */
+/** Write / overwrite */
 export async function dbSet(path, value) {
   await set(ref(db, path), value);
 }
 
-/** Push new child, returns key */
+/** Merge-update (partial write) */
+export async function dbUpdate(path, value) {
+  await update(ref(db, path), value);
+}
+
+/** Push new child → returns generated key */
 export async function dbPush(path, value) {
   const r = await push(ref(db, path), value);
   return r.key;
 }
 
-/** Delete node */
+/** Delete a node */
 export async function dbRemove(path) {
   await remove(ref(db, path));
 }
 
-/** Subscribe to realtime changes */
+/** Realtime listener → returns unsubscribe function */
 export function dbListen(path, callback) {
-  return onValue(ref(db, path), snap => callback(snap.exists() ? snap.val() : null));
+  const unsub = onValue(ref(db, path), snap => {
+    callback(snap.exists() ? snap.val() : null);
+  });
+  return unsub;
 }
 
-// ─── Storage helpers ──────────────────────────────────────────────────────────
+// ── Storage helpers ───────────────────────────────────────────────────────────
 
-/** Upload base64 data URL → returns public download URL */
-export async function storageUpload(path, dataUrl) {
-  const storageRef = sRef(storage, path);
-  const format     = dataUrl.startsWith('data:image/png') ? 'data_url' : 'data_url';
-  await uploadString(storageRef, dataUrl, format);
+/**
+ * Upload a base64 data-URL to Firebase Storage
+ * Returns the public HTTPS download URL
+ */
+export async function storageUpload(storagePath, dataUrl) {
+  const storageRef = sRef(storage, storagePath);
+  await uploadString(storageRef, dataUrl, "data_url");
   return await getDownloadURL(storageRef);
 }
 
-/** Delete file from storage */
-export async function storageDelete(path) {
-  try { await deleteObject(sRef(storage, path)); } catch (_) {}
+/** Delete a file from Storage (silent fail if not found) */
+export async function storageDelete(storagePath) {
+  try { await deleteObject(sRef(storage, storagePath)); } catch (_) {}
 }
