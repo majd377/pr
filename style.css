@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Lemonada:wght@400;600;700&display=swap');
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -366,9 +366,39 @@ footer a:hover { color: var(--gold2); }
   .hero-title { font-size: 2rem; }
 }
 
-/* ── RTL SUPPORT ── */
-[dir="rtl"] {
-  font-family: 'Inter', 'Tajawal', 'Noto Kufi Arabic', sans-serif;
+/* ── RTL + ARABIC FONT (Lemonada) ── */
+[dir="rtl"],
+[dir="rtl"] body,
+[dir="rtl"] p,
+[dir="rtl"] span,
+[dir="rtl"] div,
+[dir="rtl"] a,
+[dir="rtl"] button,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] label,
+[dir="rtl"] .nav-links a,
+[dir="rtl"] .hero-tagline,
+[dir="rtl"] .hero-subtitle,
+[dir="rtl"] .hero-cta,
+[dir="rtl"] .section-label,
+[dir="rtl"] .admin-tab,
+[dir="rtl"] .admin-section-title,
+[dir="rtl"] .project-info-title,
+[dir="rtl"] .project-info-desc,
+[dir="rtl"] .project-info-tag,
+[dir="rtl"] .stat-label,
+[dir="rtl"] .cv-placeholder p {
+  font-family: 'Lemonada', sans-serif;
+}
+[dir="rtl"] .hero-title,
+[dir="rtl"] .section-title,
+[dir="rtl"] .admin-title,
+[dir="rtl"] .modal-title,
+[dir="rtl"] .project-modal-title {
+  font-family: 'Lemonada', sans-serif;
+  font-weight: 700;
+  line-height: 1.5;
 }
 [dir="rtl"] .nav-links { flex-direction: row-reverse; }
 [dir="rtl"] .nav-right { flex-direction: row-reverse; }
@@ -376,6 +406,14 @@ footer a:hover { color: var(--gold2); }
 [dir="rtl"] .toast.show { transform: translateX(0); }
 [dir="rtl"] .modal-close { right: auto; left: 1.2rem; }
 [dir="rtl"] .project-modal-close { right: auto; left: 1rem; }
-[dir="rtl"] .hero-title { line-height: 1.3; }
 [dir="rtl"] .about-text p { text-align: right; }
 [dir="rtl"] .project-info { text-align: right; }
+[dir="rtl"] .stat-item { border-left: none; border-right: 1px solid rgba(201,168,76,.3); padding-left: 0; padding-right: 1.5rem; }
+[dir="rtl"] .admin-project-tag { margin-left: 0; margin-right: .8rem; }
+[dir="rtl"] .section-header { direction: rtl; }
+
+/* ── BILINGUAL ADMIN FIELDS ── */
+.admin-bilingual { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.admin-bilingual-label { font-size: 10px; letter-spacing: .08em; color: #555; text-transform: uppercase; margin-bottom: .3rem; display: flex; align-items: center; gap: .4rem; }
+.admin-bilingual-label em { color: var(--gold); font-style: normal; font-size: 9px; }
+@media (max-width: 640px) { .admin-bilingual { grid-template-columns: 1fr; } }

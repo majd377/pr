@@ -208,14 +208,42 @@
 
   <!-- About tab -->
   <div class="admin-content" id="tab-about">
-    <div class="admin-section-title">About Section</div>
-    <div class="admin-field"><label>Paragraph 1</label><textarea id="aboutP1" placeholder="First paragraph..."></textarea></div>
-    <div class="admin-field"><label>Paragraph 2</label><textarea id="aboutP2" placeholder="Second paragraph..."></textarea></div>
-    <div class="admin-grid-2">
-      <div class="admin-field"><label>Years of Experience</label><input type="text" id="statYearsInput" placeholder="e.g. 5+"></div>
-      <div class="admin-field"><label>Happy Clients</label>      <input type="text" id="statClientsInput" placeholder="e.g. 30+"></div>
+    <div class="admin-section-title">About Section — نص "عني"</div>
+    <p style="font-size:12px;color:#555;margin-bottom:1.5rem;line-height:1.7;">اكتب كل فقرة بالإنجليزي والعربي — الموقع يعرض النص الصح حسب اللغة المختارة.</p>
+
+    <div class="admin-field">
+      <label>Paragraph 1</label>
+      <div class="admin-bilingual">
+        <div>
+          <span class="admin-bilingual-label">English <em>EN</em></span>
+          <textarea id="aboutP1En" placeholder="First paragraph in English..."></textarea>
+        </div>
+        <div>
+          <span class="admin-bilingual-label">العربية <em>AR</em></span>
+          <textarea id="aboutP1Ar" placeholder="الفقرة الأولى بالعربي..." style="font-family:'Lemonada',sans-serif;direction:rtl;text-align:right;"></textarea>
+        </div>
+      </div>
     </div>
-    <button class="admin-btn-primary" id="saveAboutBtn">Save Changes</button>
+
+    <div class="admin-field">
+      <label>Paragraph 2</label>
+      <div class="admin-bilingual">
+        <div>
+          <span class="admin-bilingual-label">English <em>EN</em></span>
+          <textarea id="aboutP2En" placeholder="Second paragraph in English..."></textarea>
+        </div>
+        <div>
+          <span class="admin-bilingual-label">العربية <em>AR</em></span>
+          <textarea id="aboutP2Ar" placeholder="الفقرة الثانية بالعربي..." style="font-family:'Lemonada',sans-serif;direction:rtl;text-align:right;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-grid-2">
+      <div class="admin-field"><label>Years of Experience / سنوات الخبرة</label><input type="text" id="statYearsInput" placeholder="e.g. 5+"></div>
+      <div class="admin-field"><label>Happy Clients / عملاء سعداء</label><input type="text" id="statClientsInput" placeholder="e.g. 30+"></div>
+    </div>
+    <button class="admin-btn-primary" id="saveAboutBtn">Save Changes / حفظ</button>
     <div class="admin-success" id="aboutSuccess">✓ Saved!</div>
   </div>
 

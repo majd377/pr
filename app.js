@@ -161,10 +161,14 @@ function applyLanguage() {
   labels.forEach((el,i) => { if(labelKeys[i]) el.textContent = t(labelKeys[i]); });
   titles.forEach((el,i) => { if(titleKeys[i]) el.textContent = t(titleKeys[i]); });
 
-  // About static text (if not overridden from DB)
+  // About text — re-apply bilingual if we have cached meta, else use defaults
   const at = document.getElementById("aboutText");
-  if (at && !at.dataset.custom) {
-    at.innerHTML = `<p>${t("aboutP1")}</p><p>${t("aboutP2")}</p><p>${t("aboutP3")}</p>`;
+  if (at) {
+    if (_cachedMeta) {
+      applyAboutText(_cachedMeta);
+    } else if (!at.dataset.custom) {
+      at.innerHTML = `<p>${t("aboutP1")}</p><p>${t("aboutP2")}</p><p>${t("aboutP3")}</p>`;
+    }
   }
 
   // Stats labels
@@ -234,18 +238,18 @@ function hideLoading() {
 // ─────────────────────────────────────────────────────────────────────────────
 //  APPLY META
 // ─────────────────────────────────────────────────────────────────────────────
+// Cached meta for re-applying on language switch
+let _cachedMeta = null;
+
 function applyMeta(meta) {
   if (!meta) return;
+  _cachedMeta = meta;
   if (meta.logoUrl) {
     document.querySelectorAll(".site-logo").forEach(el => { el.src = meta.logoUrl; el.style.display = "block"; });
     const lp = document.getElementById("logoPreview");
     if (lp) lp.src = meta.logoUrl;
   }
-  const at = document.getElementById("aboutText");
-  if (at && (meta.aboutP1 || meta.aboutP2)) {
-    at.dataset.custom = "1";
-    at.innerHTML = `<p>${meta.aboutP1||""}</p><p>${meta.aboutP2||""}</p><p>${t("aboutP3")}</p>`;
-  }
+  applyAboutText(meta);
   const sy = document.getElementById("statYears");
   const sc = document.getElementById("statClients");
   if (sy && meta.yearsExp) sy.textContent = meta.yearsExp;
@@ -253,6 +257,27 @@ function applyMeta(meta) {
   const fn = document.getElementById("cvFileName");
   if (fn && meta.cvFileName) fn.textContent = meta.cvFileName;
   if (meta.cvUrl) window._cvUrl = meta.cvUrl;
+}
+
+/** Renders about text in the correct language from stored bilingual data */
+function applyAboutText(meta) {
+  const at = document.getElementById("aboutText");
+  if (!at) return;
+  const isAr = currentLang === "ar";
+
+  // New bilingual fields take priority, fallback to old single-lang fields
+  const p1 = isAr
+    ? (meta.aboutP1Ar || meta.aboutP1 || t("aboutP1"))
+    : (meta.aboutP1En || meta.aboutP1 || t("aboutP1"));
+  const p2 = isAr
+    ? (meta.aboutP2Ar || meta.aboutP2 || t("aboutP2"))
+    : (meta.aboutP2En || meta.aboutP2 || t("aboutP2"));
+
+  const hasCustom = meta.aboutP1En || meta.aboutP1Ar || meta.aboutP1;
+  if (hasCustom) {
+    at.dataset.custom = "1";
+    at.innerHTML = `<p>${p1}</p><p>${p2}</p><p>${t("aboutP3")}</p>`;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -431,8 +456,15 @@ async function openAdmin() {
   renderAdminProjects();
   try {
     const meta = await dbGet("meta") || {};
-    document.getElementById("aboutP1").value          = meta.aboutP1  || "";
-    document.getElementById("aboutP2").value          = meta.aboutP2  || "";
+    // Support new bilingual fields with fallback to old single fields
+    const p1en = document.getElementById("aboutP1En");
+    const p1ar = document.getElementById("aboutP1Ar");
+    const p2en = document.getElementById("aboutP2En");
+    const p2ar = document.getElementById("aboutP2Ar");
+    if (p1en) p1en.value = meta.aboutP1En || meta.aboutP1 || "";
+    if (p1ar) p1ar.value = meta.aboutP1Ar || "";
+    if (p2en) p2en.value = meta.aboutP2En || meta.aboutP2 || "";
+    if (p2ar) p2ar.value = meta.aboutP2Ar || "";
     document.getElementById("statYearsInput").value   = meta.yearsExp || "";
     document.getElementById("statClientsInput").value = meta.clients  || "";
   } catch (_) {}
@@ -534,10 +566,15 @@ function renderAdminProjects() {
 // ─────────────────────────────────────────────────────────────────────────────
 async function saveAbout() {
   const patch = {
-    aboutP1:  document.getElementById("aboutP1").value.trim(),
-    aboutP2:  document.getElementById("aboutP2").value.trim(),
-    yearsExp: document.getElementById("statYearsInput").value.trim()   || "—",
-    clients:  document.getElementById("statClientsInput").value.trim() || "—",
+    aboutP1En: (document.getElementById("aboutP1En")?.value || "").trim(),
+    aboutP1Ar: (document.getElementById("aboutP1Ar")?.value || "").trim(),
+    aboutP2En: (document.getElementById("aboutP2En")?.value || "").trim(),
+    aboutP2Ar: (document.getElementById("aboutP2Ar")?.value || "").trim(),
+    // Keep legacy field for backward compat
+    aboutP1:   (document.getElementById("aboutP1En")?.value || "").trim(),
+    aboutP2:   (document.getElementById("aboutP2En")?.value || "").trim(),
+    yearsExp:  document.getElementById("statYearsInput").value.trim()   || "—",
+    clients:   document.getElementById("statClientsInput").value.trim() || "—",
   };
   try {
     await dbUpdate("meta", patch);
