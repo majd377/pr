@@ -586,67 +586,6 @@ async function saveAbout() {
   } catch (err) { showToast("Save failed: "+err.message); }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-//  LOGO UPLOAD  — FIX: reset input after upload so change fires again
-// ─────────────────────────────────────────────────────────────────────────────
-async function handleLogoUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  showToast("Uploading logo...");
-  const reader = new FileReader();
-  reader.onload = async ev => {
-    try {
-      const url = await storageUpload("meta/logo", ev.target.result);
-      await dbUpdate("meta", { logoUrl: url });
-      document.querySelectorAll(".site-logo").forEach(el => { el.src = url; el.style.display = "block"; });
-      const lp = document.getElementById("logoPreview");
-      if (lp) lp.src = url;
-      document.getElementById("logoUploadLabel").textContent = "✓ " + file.name;
-      showToast(t("logoUpdated"));
-    } catch (err) {
-      showToast("Logo upload failed: " + err.message);
-    } finally {
-      // FIX: reset so user can re-upload same file
-      e.target.value = "";
-    }
-  };
-  reader.readAsDataURL(file);
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  CV UPLOAD  — FIX: reset input after upload
-// ─────────────────────────────────────────────────────────────────────────────
-async function handleCVUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  showToast("Uploading CV...");
-  const reader = new FileReader();
-  reader.onload = async ev => {
-    try {
-      const url = await storageUpload("meta/cv", ev.target.result);
-      await dbUpdate("meta", { cvUrl: url, cvFileName: file.name });
-      window._cvUrl = url;
-      const fn = document.getElementById("cvFileName");
-      if (fn) fn.textContent = file.name;
-      const s = document.getElementById("cvSuccess");
-      s.style.display = "block";
-      setTimeout(() => s.style.display = "none", 2500);
-      showToast(t("cvUpdated"));
-    } catch (err) {
-      showToast("CV upload failed: " + err.message);
-    } finally {
-      // FIX: reset so user can re-upload same file
-      e.target.value = "";
-    }
-  };
-  reader.readAsDataURL(file);
-}
-
-function downloadCV() {
-  if (!window._cvUrl) { showToast(t("noCVUploaded")); return; }
-  const a = document.createElement("a");
-  a.href = window._cvUrl; a.target = "_blank"; a.click();
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  TOAST
