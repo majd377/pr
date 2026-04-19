@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,9 +35,12 @@
     <li><a href="#about">About</a></li>
     <li><a href="#cv">Resume</a></li>
   </ul>
-  <div class="nav-search">
-    <input type="text" id="navSearch" placeholder="Search..." autocomplete="off">
-    <span class="search-icon">⌕</span>
+  <div class="nav-right">
+    <button class="lang-toggle" id="langToggleBtn">عربي</button>
+    <div class="nav-search">
+      <input type="text" id="navSearch" placeholder="Search..." autocomplete="off">
+      <span class="search-icon">⌕</span>
+    </div>
   </div>
 </nav>
 
@@ -116,10 +119,7 @@
 
 <!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
 <footer>
-  <div class="footer-logo">
-    <img src="majd-removebg-preview.png" alt="Majd" class="site-logo" onerror="this.style.display='none'">
-  </div>
-  <div class="footer-copy">Dev & Design by Majd.sh</div>
+  <p>تم التصميم بكل حب بواسطة <a href="https://wa.me/972567059705">مـجد شبير</a> &copy; 2025</p>
 </footer>
 
 <!-- ── LOGIN MODAL ────────────────────────────────────────────────────────── -->
@@ -150,6 +150,7 @@
       <div class="project-modal-tag"   id="pmTag"></div>
       <h3 class="project-modal-title"  id="pmTitle"></h3>
       <p  class="project-modal-desc"   id="pmDesc"></p>
+      <a  class="project-modal-link"   id="pmLink" href="#" target="_blank" rel="noopener" style="display:none">Visit Project →</a>
     </div>
   </div>
 </div>
@@ -170,11 +171,9 @@
   <!-- Projects tab -->
   <div class="admin-content active" id="tab-projects">
     <div class="admin-section-title">Add New Project</div>
-    <div class="admin-grid-2">
-      <div class="admin-field"><label>Project Title</label><input type="text" id="newTitle" placeholder="e.g. Brand Identity 2024"></div>
-      <div class="admin-field"><label>Category / Tag</label><input type="text" id="newTag"   placeholder="e.g. Branding"></div>
-    </div>
+    <div class="admin-field"><label>Project Title</label><input type="text" id="newTitle" placeholder="e.g. Brand Identity 2024"></div>
     <div class="admin-field"><label>Description (optional)</label><textarea id="newDesc" placeholder="Describe the project..."></textarea></div>
+    <div class="admin-field"><label>Project Link (optional)</label><input type="url" id="newLink" placeholder="https://..."></div>
     <div class="admin-field">
       <label>Project Image</label>
       <div class="img-upload-area" onclick="document.getElementById('imgUpload').click()">
